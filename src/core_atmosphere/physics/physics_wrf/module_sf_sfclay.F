@@ -413,7 +413,6 @@ write (*,*) "SFCLAT is exexcute*************************************************
 ! PSFC cb
          PSFC(I)=PSFCPA(I)/1000.
       ENDDO
-print *,'coming inside sf_clay1D'
 
 !write (*,*) "SFCLAYID is exexcute**************************************************"
 !                                                      

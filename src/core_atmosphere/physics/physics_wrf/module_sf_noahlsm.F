@@ -346,7 +346,6 @@ CONTAINS
          RUNOFF3 = 0.0
          SNOMLT = 0.0
 
-print *,'coming inside lsm slx function'
 
 ! ----------------------------------------------------------------------
 !  THE VARIABLE "ICE" IS A FLAG DENOTING SEA-ICE / LAND-ICE / ICE-FREE LAND

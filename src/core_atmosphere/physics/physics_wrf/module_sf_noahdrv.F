@@ -556,7 +556,6 @@ CONTAINS
   real, intent(in) :: xice_threshold
   character(len=80) :: message_text
 
-print *,'coming inside noahdrv function'
 
 ! MEK MAY 2007
       FDTLIW=DT/ROWLIW
@@ -579,7 +578,7 @@ print *,'coming inside noahdrv function'
    DO J=jts,jte
 
       IF(ITIMESTEP.EQ.1)THEN
-        DO 50 I=its,ite
+        DO I=its,ite
 !*** initialize soil conditions for IHOP 31 May case
 !         IF((XLAND(I,J)-1.5) < 0.)THEN
 !            if (I==108.and.j==85) then
@@ -616,11 +615,12 @@ print *,'coming inside noahdrv function'
             ENDIF
           ENDIF
 !
-   50   CONTINUE
+        END DO
+!   50   CONTINUE
       ENDIF                                                               ! end of initialization over ocean
 
 !-----------------------------------------------------------------------
-      DO 100 I=its,ite
+      DO I=its,ite
 ! surface pressure
         PSFC=P8w3D(i,1,j)
 ! pressure in middle of lowest layer
@@ -765,11 +765,12 @@ print *,'coming inside noahdrv function'
         RIBB=RIB(I,J)
 !FEI: temporaray arrays above need to be changed later by using SI
 
-          DO 70 NS=1,NSOIL
+          DO NS=1,NSOIL
             SMC(NS)=SMOIS(I,NS,J)
             STC(NS)=TSLB(I,NS,J)                                          !STEMP
             SWC(NS)=SH2O(I,NS,J)
-   70     CONTINUE
+         END DO
+!   70     CONTINUE
 !
           if ( (SNEQV.ne.0..AND.SNOWHK.eq.0.).or.(SNOWHK.le.SNEQV) )THEN
             SNOWHK= 5.*SNEQV
@@ -930,11 +931,12 @@ print *,'coming inside noahdrv function'
            QSFC_RURAL(I,J)= Q1/(1.0-Q1)
 ! Calculate momentum flux from rural surface for use with multi-layer UCM (Martilli et al. 2002)
 
-          DO 80 NS=1,NSOIL
+          DO NS=1,NSOIL
            SMOIS(I,NS,J)=SMC(NS)
            TSLB(I,NS,J)=STC(NS)                                        !  STEMP
            SH2O(I,NS,J)=SWC(NS)
-   80     CONTINUE
+          END DO
+!   80     CONTINUE
 !       ENDIF
 
      !
@@ -1171,7 +1173,8 @@ print *,'coming inside noahdrv function'
 
         ENDIF                                                           ! endif of land-sea test
 
-  100 CONTINUE                                                          ! of I loop
+      END DO
+!  100 CONTINUE                                                          ! of I loop
 
    ENDDO                                                                ! of J loop
 
@@ -1530,7 +1533,7 @@ print *,'coming inside noahdrv function'
             CANWAT(I,J)=0.0
           ENDDO
           ENDDO
- 110      CONTINUE
+! 110      CONTINUE
 
    ENDIF
 !------------------------------------------------------------------------------
